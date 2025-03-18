@@ -14,13 +14,8 @@
 	import Spinner from "$lib/components/Spinner.svelte";
 	import { fade } from "svelte/transition";
 	import { gameMessages } from "$lib/game_messages.js";
-	import { pushState } from '$app/navigation';
-	import { writeGameToFireStore } from '$lib/writeToFirestore.js';
-
-	// let { data } = $props();
-	
-
-  // let puzzle = $derived.by(() => decodeText(size+''+puzzle));
+	import { pushState, goto } from '$app/navigation';
+	import { writeGameToFireStore } from '$lib/writeToFirestore';
 
   let game: Game | undefined = $state();
   let working = $state(false);
@@ -40,7 +35,7 @@
 	const newGame = async (size: number) => {
 		const words = await pickWords(size);
 		initialize(size, words);
-		// pushState(`/${size}/${encodeText(words)}`, {});
+		writeGameToFireStore(words);
 		pushState(`/${size}/${encodeText(words)}`, {});
 	};
 
@@ -52,7 +47,6 @@
     try {
       game = await GameFactory(size, puzzle);
       currentTurn = game.startingSwaps;
-      writeGameToFireStore(game.words);
       working = false;
       generationError = false;
       myArrays.completedWords = [];
@@ -132,7 +126,7 @@
 			initialize(size, puzzle);
 		} else {
 			console.log('invalid puzzle');
-			// goto(`/puzzle`);
+			goto(`/`);
 		}
 	};
 
@@ -142,15 +136,9 @@
 
 </script>
 
-
-<!-- {#snippet myButton(text: string, func: () => void)}
-	<button class="myButton" onclick={func}>{text}</button>
-{/snippet} -->
-
 <svelte:head>
-	<title>PUZZLE</title>
+	<title>Waffleclone</title>
 </svelte:head>
-<!-- <svelte:window onkeydown={handleKeyDown} onpopstate={() => initialize(page.data.p[0], decodeText(page.data.p))} /> -->
 <svelte:window onkeydown={handleKeyDown} onpopstate={() => startUp()} />
 <main>
   <Header title="Waffleclone" showDef={true} />
@@ -181,15 +169,11 @@
 	{#if solved || outOfTurns}
 		<div transition:fade>
 			{#if outOfTurns}
-				<!-- <h2>out of turns!</h2> -->
 				<div class="win-lose">
 				{gameMessages.lost[Math.floor(Math.random() * gameMessages.lost.length)]}
 				</div>
 				<MyButton t="Retry?" mystyle="" func={() => shuffle()} />
-				<!-- <button class="myButton" onclick={shuffle}>Retry?</button> -->
-				<!-- {@render myButton('Retry?', () => shuffle())} -->
 				{:else if solved}
-				<!-- <h2>solved!</h2> -->
 				 <div class="win-lose">
 					 {currentTurn < 2 ? gameMessages.close[Math.floor(Math.random() * gameMessages.close.length)] : gameMessages.won[Math.floor(Math.random() * gameMessages.won.length)]}
 					</div>
@@ -197,9 +181,7 @@
 
 			<div class="controls">
 				<MyButton t="new 5x5" mystyle="" func={() => newGame(5)} />
-				<!-- {@render myButton('new 5x5', ()=> newGame(5))} -->
-				<MyButton t="new 7x7" mystyle="" func={() => newGame(7)} />
-				<!-- {@render myButton('new 7x7', ()=> newGame(7))} -->
+					<MyButton t="new 7x7" mystyle="" func={() => newGame(7)} />
 			</div>
 		</div>
 	{/if}
@@ -257,38 +239,6 @@
 		justify-content: center;
 		margin: 1rem 0;
 		align-items: center;
-	}
-
-	.myButton {
-		width: 100%;
-		border-radius: var(--radius);
-		color: var(--ccolor);
-		background-color: #fff;
-		padding: 0.5rem 1rem;
-		text-decoration: none;
-		font-size: 1.25rem;
-		font-weight: bold;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto;
-	}
-
-	.myButton:hover {
-		color: #fff;
-		background-color: var(--ccolor);
-	}
-
-	.myButton:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	.myButton:disabled:hover {
-		opacity: 0.5;
-		cursor: not-allowed;
-		color: var(--ccolor);
-		background-color: #fff;
 	}
 
 	.errormessage {

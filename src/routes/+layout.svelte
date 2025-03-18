@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>waffleclone</title>
+  <title>Waffleclone</title>
   <meta name="description" content="waffle game clone">
 </svelte:head>
 

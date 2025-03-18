@@ -1755,6 +1755,7 @@ const words_5 = [
   "model",
   "modem",
   "modes",
+  "moire",
   "moist",
   "molar",
   "moles",
