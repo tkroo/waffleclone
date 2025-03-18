@@ -5,11 +5,12 @@
   import { encodeText, decodeText } from '$lib/rot13';
   import { type Game, type Tile, GameFactory } from '$lib/game2.svelte';
 	import { myArrays, mySettings } from '$lib/utils.svelte';
+	import MyButton from '$lib/components/MyButton.svelte';
   import DefinitionList from '$lib/components/DefinitionList.svelte';
 	import LetterTile from '$lib/components/LetterTile.svelte';
 	import Progress from '$lib/components/Progress.svelte';
 	import WordsProgress from '$lib/components/WordsProgress.svelte';
-	import Header from '$lib/components/Header2.svelte';
+	import Header from '$lib/components/Header.svelte';
 	import Spinner from "$lib/components/Spinner.svelte";
 	import { fade } from "svelte/transition";
 	import { gameMessages } from "$lib/game_messages.js";
@@ -142,9 +143,9 @@
 </script>
 
 
-{#snippet myButton(text: string, func: () => void)}
+<!-- {#snippet myButton(text: string, func: () => void)}
 	<button class="myButton" onclick={func}>{text}</button>
-{/snippet}
+{/snippet} -->
 
 <svelte:head>
 	<title>PUZZLE</title>
@@ -152,7 +153,7 @@
 <!-- <svelte:window onkeydown={handleKeyDown} onpopstate={() => initialize(page.data.p[0], decodeText(page.data.p))} /> -->
 <svelte:window onkeydown={handleKeyDown} onpopstate={() => startUp()} />
 <main>
-  <Header title="Waffleclone" />
+  <Header title="Waffleclone" showDef={true} />
   {#if gameReady && game}
 		<Progress {currentTurn} startingSwaps={game?.startingSwaps} board={game?.grid} />
 		<WordsProgress words = {game.words} />
@@ -184,8 +185,9 @@
 				<div class="win-lose">
 				{gameMessages.lost[Math.floor(Math.random() * gameMessages.lost.length)]}
 				</div>
+				<MyButton t="Retry?" mystyle="" func={() => shuffle()} />
 				<!-- <button class="myButton" onclick={shuffle}>Retry?</button> -->
-				{@render myButton('Retry?', () => shuffle())}
+				<!-- {@render myButton('Retry?', () => shuffle())} -->
 				{:else if solved}
 				<!-- <h2>solved!</h2> -->
 				 <div class="win-lose">
@@ -194,10 +196,10 @@
 			{/if}
 
 			<div class="controls">
-				<!-- <button class="myButton" onclick={() => initialize(5)}>new 5x5</button> -->
-				{@render myButton('new 5x5', ()=> newGame(5))}
-				<!-- <button class="myButton" onclick={() => initialize(7)}>new 7x7</button> -->
-				{@render myButton('new 7x7', ()=> newGame(7))}
+				<MyButton t="new 5x5" mystyle="" func={() => newGame(5)} />
+				<!-- {@render myButton('new 5x5', ()=> newGame(5))} -->
+				<MyButton t="new 7x7" mystyle="" func={() => newGame(7)} />
+				<!-- {@render myButton('new 7x7', ()=> newGame(7))} -->
 			</div>
 		</div>
 	{/if}

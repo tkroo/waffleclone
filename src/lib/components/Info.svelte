@@ -75,7 +75,7 @@
 <style>
   .popup {
     position: absolute;
-    top: 3rem;
+    top: 2.5rem;
     left: 0rem;
     right: 0rem;
     bottom: 0rem;
