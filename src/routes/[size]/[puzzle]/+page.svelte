@@ -84,7 +84,7 @@
 	};
 
 	const handleKeyDown = (e: KeyboardEvent) => {
-		console.log('handleKeyDown', e.key);
+		// console.log('handleKeyDown', e.key);
 		if (e.key == '-') {
 			myBools.debug = !myBools.debug;
 		}
