@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { myBools } from '$lib/utils.svelte';
   import { pickEightWords, pickSixWords, validatePuzzle } from '$lib/pickWords_faster';
   import { encodeText, decodeText } from '$lib/rot13';
   import { type Game, type Tile, GameFactory } from '$lib/game2.svelte';
-	import { myArrays, mySettings } from '$lib/utils.svelte';
+	import { myArrays, mySettings, myBools } from '$lib/utils.svelte';
 	import MyButton from '$lib/components/MyButton.svelte';
   import DefinitionList from '$lib/components/DefinitionList.svelte';
 	import LetterTile from '$lib/components/LetterTile.svelte';
@@ -84,7 +83,6 @@
 	};
 
 	const handleKeyDown = (e: KeyboardEvent) => {
-		// console.log('handleKeyDown', e.key);
 		if (e.key == '-') {
 			myBools.debug = !myBools.debug;
 		}
@@ -99,6 +97,9 @@
 		}
 		if (e.key == 's') {
 			solvePuzzle();
+		}
+		if (e.key == '?') {
+			myBools.showPopup = !myBools.showPopup;
 		}
 		if (e.key == ']') {
 			game?.increaseTurns(1);

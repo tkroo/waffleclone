@@ -3,7 +3,8 @@ import { LocalStorage as LocalStorageState } from '$lib/storage.svelte';
 export const myBools = $state({
   debug: false,
   working: false,
-  generateError: false
+  generateError: false,
+  showPopup: false,
 })
 
 // firestore collection name

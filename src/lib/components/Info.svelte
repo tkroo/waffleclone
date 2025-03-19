@@ -1,11 +1,10 @@
 <script>
   import LinkToOriginal from "$lib/components/LinkToOriginal.svelte";
-  import { mySettings } from "$lib/utils.svelte";
-  let { showPopup = $bindable() } = $props();
+  import { myBools, mySettings } from "$lib/utils.svelte";
   import { fade } from "svelte/transition";
 </script>
 
-{#if showPopup}
+{#if myBools.showPopup}
 <div class="popup" transition:fade={{duration: 100}}>
   <div class="content">
     <h2>How to Play</h2>
@@ -40,7 +39,6 @@
       <li class="col2"><span class="tile-little key">5</span>New 5x5</li>
       <li class="col2"><span class="tile-little key">7</span>New 7x7</li>
       <li class="col2"><span class="tile-little key">s</span>Solve</li>
-      <li class="col2"><span class="tile-little key">r</span>Reset puzzle</li>
       <li class="col2"><span class="tile-little key">?</span>Toggle info</li>
       <li>cheats</li>
       <li class="col2"><span class="tile-little key">-</span>Toggle answer</li>
