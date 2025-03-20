@@ -1923,7 +1923,6 @@ const words_5 = [
   "peace",
   "peach",
   "pearl",
-  "pease",
   "pedal",
   "penal",
   "pence",
