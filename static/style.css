@@ -136,3 +136,10 @@ button:disabled {
     border-color: var(--wavecolor3);
   }
 }
+
+@media screen and (max-width: 520px) {
+  main {
+    padding: 0 0.25rem;
+  }
+  
+}
